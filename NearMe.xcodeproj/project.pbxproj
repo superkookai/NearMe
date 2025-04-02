@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF4DEC6B2D9CDD2A0048DC43 /* ActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DEC6A2D9CDD2A0048DC43 /* ActionButtons.swift */; };
 		EFBE00C12D9BADAC00F41BC0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE00BE2D9BADAC00F41BC0 /* ContentView.swift */; };
 		EFBE00C22D9BADAC00F41BC0 /* NearMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBE00BF2D9BADAC00F41BC0 /* NearMeApp.swift */; };
 		EFBE00C32D9BADAC00F41BC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFBE00BB2D9BADAC00F41BC0 /* Preview Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF4DEC6A2D9CDD2A0048DC43 /* ActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtons.swift; sourceTree = "<group>"; };
 		EFBE00AA2D9BADA400F41BC0 /* NearMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBE00BB2D9BADAC00F41BC0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EFBE00BD2D9BADAC00F41BC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				EFBE00D52D9BCB5E00F41BC0 /* SearchBarView.swift */,
 				EFBE00D72D9BCD0900F41BC0 /* PlaceListView.swift */,
 				EFBE00DB2D9BD68400F41BC0 /* SelectedPlaceDetailView.swift */,
+				EF4DEC6A2D9CDD2A0048DC43 /* ActionButtons.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				EFBE00C72D9BB17600F41BC0 /* LocationManager.swift in Sources */,
 				EFBE00D22D9BC65F00F41BC0 /* PreviewData.swift in Sources */,
 				EFBE00CD2D9BBA2000F41BC0 /* MapUtilities.swift in Sources */,
+				EF4DEC6B2D9CDD2A0048DC43 /* ActionButtons.swift in Sources */,
 				EFBE00CA2D9BB85B00F41BC0 /* MKCoordinateRegion+Ext.swift in Sources */,
 				EFBE00D42D9BC84500F41BC0 /* SearchOptionsView.swift in Sources */,
 			);

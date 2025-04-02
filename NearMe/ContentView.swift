@@ -22,6 +22,8 @@ struct ContentView: View {
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var selectedMapItem: MKMapItem?
     @State private var displayMode: DisplayMode = .list
+    @State private var lookAroundScence: MKLookAroundScene?
+    @State private var route: MKRoute?
     
     private func search() async {
         do {
@@ -35,11 +37,28 @@ struct ContentView: View {
         }
     }
     
+    private func requestCalculateDirections() async {
+        route = nil
+        if let selectedMapItem {
+            guard let userLocation = locationManager.manager.location else {
+                return
+            }
+            let startMapItem = MKMapItem(placemark: MKPlacemark(coordinate: userLocation.coordinate))
+            
+            self.route = await calculateDirections(from: startMapItem, to: selectedMapItem)
+        }
+    }
+    
     var body: some View {
         ZStack {
             Map(position: $position, selection: $selectedMapItem) {
                 ForEach(mapItems, id: \.self) { mapItem in
                     Marker(item: mapItem)
+                }
+                
+                if let route {
+                    MapPolyline(route)
+                        .stroke(.blue, lineWidth: 5)
                 }
                 
                 UserAnnotation()
@@ -52,10 +71,8 @@ struct ContentView: View {
             .onChange(of: self.selectedMapItem, { _, _ in
                 if let _ = self.selectedMapItem {
                     displayMode = .detail
-                    selectedDetent = .large
                 } else {
                     displayMode = .list
-                    selectedDetent = .medium
                 }
             })
             .sheet(isPresented: .constant(true)) {
@@ -63,10 +80,20 @@ struct ContentView: View {
                     switch displayMode {
                     case .list:
                         SearchBarView(search: $query, isSearching: $isSearching)
-                        PlaceListView(mapItems: self.mapItems)
+                        PlaceListView(mapItems: self.mapItems, selectedMapItem: $selectedMapItem)
                     case .detail:
                         SelectedPlaceDetailView(mapItem: $selectedMapItem)
                             .padding()
+                        if selectedDetent == .medium || selectedDetent == .large {
+                            
+                            if let selectedMapItem {
+                                ActionButtons(mapItem: selectedMapItem)
+                                    .padding(.leading)
+                                    .padding(.bottom)
+                            }
+                            
+                            LookAroundPreview(initialScene: lookAroundScence)
+                        }
                     }
                 }
                 .presentationDetents([.fraction(0.15), .medium, .large], selection: $selectedDetent)
@@ -83,9 +110,20 @@ struct ContentView: View {
                 await search()
             }
         }
+        .task(id: selectedMapItem) {
+            lookAroundScence = nil
+            route = nil
+            if let selectedMapItem {
+                let request = MKLookAroundSceneRequest(mapItem: selectedMapItem)
+                lookAroundScence = try? await request.scene
+                await requestCalculateDirections()
+            }
+        }
     }
 }
 
 #Preview {
     ContentView()
 }
+
+//Task closure does not cancel when View disappear >> Use task modifier
